@@ -1,9 +1,5 @@
 import { Router } from 'express';
-import { startOfHour, parseISO } from 'date-fns';
 
-import { getCustomRepository } from 'typeorm';
-import AppointmentsRepository from '../repositories/AppointmentsRepository';
-import CreateAppointmentService from '../services/CreateAppointmentService';
 import CreateUserService from '../services/CreateUserService';
 
 const usersRouter = Router();
@@ -14,6 +10,8 @@ usersRouter.post('/', async (request, response) => {
 
     const createUser = new CreateUserService();
     const user = await createUser.execute({ name, email, password });
+
+    delete user.password;
 
     return response.json(user);
   } catch (err) {
