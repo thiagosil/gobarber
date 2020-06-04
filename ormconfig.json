@@ -6,7 +6,7 @@
   "password": "thundercats!23",
   "database": "gostack_gobarber",
   "entities": [
-    "./src/modules/**/infra/typeorm/*.ts"
+    "./src/modules/**/infra/typeorm/entities/*.ts"
   ],
   "migrations": [
     "./src/shared/infra/typeorm/migrations/*.ts"
