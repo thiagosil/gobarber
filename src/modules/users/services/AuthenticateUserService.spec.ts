@@ -30,4 +30,47 @@ describe('AuthenticateUser', () => {
     expect(response).toHaveProperty('token');
     expect(response.user).toEqual(user);
   });
+
+  it('should not be able to authenticate with unexisting user', async () => {
+    const fakeUserRepository = new FakeUsersRepository();
+    const fakeHashProvider = new FakeHashProvider();
+
+    const authenticateUser = new AuthenticateUserService(
+      fakeUserRepository,
+      fakeHashProvider,
+    );
+
+    expect(
+      authenticateUser.execute({
+        email: 'mochileiro@example.com',
+        password: '123456',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to authenticate with wrong password', async () => {
+    const fakeUserRepository = new FakeUsersRepository();
+    const fakeHashProvider = new FakeHashProvider();
+    const createUser = new CreateUserService(
+      fakeUserRepository,
+      fakeHashProvider,
+    );
+    const authenticateUser = new AuthenticateUserService(
+      fakeUserRepository,
+      fakeHashProvider,
+    );
+
+    const user = await createUser.execute({
+      name: 'Mochileiro Das Galaxias',
+      email: 'mochileiro@example.com',
+      password: '123456',
+    });
+
+    expect(
+      authenticateUser.execute({
+        email: 'mochileiro@example.com',
+        password: '12345123',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });
