@@ -60,7 +60,7 @@ describe('AuthenticateUser', () => {
       fakeHashProvider,
     );
 
-    const user = await createUser.execute({
+    await createUser.execute({
       name: 'Mochileiro Das Galaxias',
       email: 'mochileiro@example.com',
       password: '123456',
