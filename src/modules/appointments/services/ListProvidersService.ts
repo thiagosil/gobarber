@@ -24,7 +24,6 @@ class ListProvidersService {
     );
 
     if (!users) {
-      console.log('A query foi feita no banco');
       users = await this.usersRepository.findAllProviders({
         except_user_id: user_id,
       });
