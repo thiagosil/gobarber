@@ -24,10 +24,11 @@ providersRouter.get(
   }),
   providerMonthController.index,
 );
+
 providersRouter.get(
   '/:provider_id/day-availability',
   celebrate({
-    [Segments.PARAMS]: {
+    [Segments.QUERY]: {
       provider_id: Joi.string().uuid().required,
       month: Joi.string().required(),
       year: Joi.string().required(),
